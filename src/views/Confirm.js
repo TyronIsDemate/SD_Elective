@@ -10,10 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Navigation from '../components/navigationBar';
 import Typography from '@material-ui/core/Typography';
-import Home from '../views/Datelocation';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import TextField from '@material-ui/core/TextField';
-import { borders } from '@material-ui/system';
 
 
 
@@ -70,7 +67,7 @@ export default class DateLocation extends Component {
                 <Grid container spacing={3} justify="center" style={{ marginTop: '5%%' }}>
                     <Grid item xs={8}>
                         <Navigation />
-                        <Paper className={classes.paper}>
+                        <Paper className={classes.paper} style={{ borderColor: 'secondary' }}>
                             <Grid container justify='space-around' style={{ height: '10%' }}>
                                 <Grid style={{ width: '30%' }}>
                                     <Card className={classes.card} style={{ maxHeight: '300px', marginTop: '8%' }}>
@@ -115,72 +112,44 @@ export default class DateLocation extends Component {
                                         </CardActionArea>
                                     </Card>
                                 </Grid>
-                                <Grid container style={{ width: '98%', marginTop: '50px' }} justify="space-around">
-                                    <Grid style={{ width: '98%' }}>
-                                        <TextField
-                                            id="outlined-basic"
-                                            className={classes.textField}
-                                            label="First Name"
-                                            margin="normal"
-                                            variant="outlined"
-                                            style={{
-                                                width: '100%'
-                                            }}
-                                        />
-                                    </Grid>
-                                    <Grid style={{ width: '98%' }}>
-                                        <TextField
-                                            id="outlined-basic"
-                                            className={classes.textField}
-                                            label="Last Name"
-                                            margin="normal"
-                                            variant="outlined"
-                                            style={{
-                                                width: '100%'
-                                            }}
-                                        />
-                                    </Grid>
-                                    <Grid style={{ width: '98%' }}>
-                                        <TextField
-                                            id="outlined-basic"
-                                            className={classes.textField}
-                                            label="Phone Number"
-                                            margin="normal"
-                                            variant="outlined"
-                                            style={{
-                                                width: '100%'
-                                            }}
-                                        />
-                                    </Grid>
-                                    <Grid style={{ width: '98%' }}>
-                                        <TextField
-                                            id="outlined-basic"
-                                            className={classes.textField}
-                                            label="Email"
-                                            margin="normal"
-                                            variant="outlined"
-                                            style={{
-                                                width: '100%'
-                                            }}
-                                        />
-                                    </Grid>
-                                    <Grid style={{ width: '98%' }}>
-                                        <TextField
-                                            id="outlined-basic"
-                                            className={classes.textField}
-                                            label="Payment Method"
-                                            margin="normal"
-                                            variant="outlined"
-                                            style={{
-                                                width: '100%'
-                                            }}
-                                        />
-                                    </Grid>
-                                </Grid>
-                                <br></br>
-                                <br></br>
-                                <hr style={{ width: '96%' }}></hr>
                             </Grid>
+                            <br></br>
+                            <hr style={{ width: '96%' }}></hr>
+                            <Grid >
+                                <Grid container justify='space-around'>
+                                    <Card style={{ width: '97%' }}>
+                                        <CardContent>
+                                            <Grid>
+                                                <Typography gutterBottom variant="h6" component="h2">
+                                                    Personal Details
+                                                </Typography>
+                                                <Grid>
+                                                    <Typography gutterBottom variant="p" component="p">
+                                                        First Name :
+                                                </Typography>
+                                                    <Typography gutterBottom variant="p" component="p">
+                                                        Last Name :
+                                                </Typography>
+                                                    <Typography gutterBottom variant="p" component="p">
+                                                        Phone :
+                                                </Typography>
+                                                    <Typography gutterBottom variant="p" component="p">
+                                                        Email :
+                                                </Typography>
+                                                <Typography gutterBottom variant="p" component="p">
+                                                        Payment Method :
+                                                </Typography>
+                                                
+                                                </Grid>
+                                            </Grid>
+
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            </Grid>
+                            <br></br>
+                            <br></br>
+                            <hr style={{ width: '96%' }}></hr>
                             <Card>
                                 <CardActions>
                                 <Typography gutterBottom variant="p" component="p">

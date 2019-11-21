@@ -16,6 +16,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Home from '../views/Datelocation';
+import Typography from '@material-ui/core/Typography';
+import TablePagination from '@material-ui/core/TablePagination';
 
 
 
@@ -67,8 +69,8 @@ export default class DateLocation extends Component {
         }
 
         const rows = [
-            createData('', ' ', '', ' ',' '),
-            createData('', '','', ' ', ' '),
+            createData('', ' ', '', ' ', ' '),
+            createData('', '', '', ' ', ' '),
             createData('', '', '', ' ', ' '),
             createData('', '', '', ' ', ' '),
             createData('', '', '', ' ', ' '),
@@ -109,8 +111,12 @@ export default class DateLocation extends Component {
                         <Paper className={classes.paper}>
                             <Card>
                                 <CardContent>
-                                    <h4>&nbsp;Journey from &nbsp;{this.props.from} &nbsp;to {this.props.to}</h4>
-                                    <h5 style={{ textAlign: 'left' }}> &nbsp;Date of Departure:</h5>
+                                    <Typography gutterBottom variant="h6" component="h2">
+                                        Journey from {this.props.from} to {this.props.to}
+                                    </Typography>
+                                    <Typography gutterBottom variant="p" component="p">
+                                        Date of Departure:
+                                                </Typography>
                                     <Table className={classes.table} aria-label="customized table">
                                         <TableHead>
                                             <TableRow>
@@ -137,7 +143,9 @@ export default class DateLocation extends Component {
                                     </Table>
                                 </CardContent>
                                 <CardActions>
-                                    <h4 justify='flex-end'>&nbsp;Price:</h4>
+                                    <Typography gutterBottom variant="p" component="p">
+                                        &nbsp;&nbsp;Price:
+                                                </Typography>
                                     <Grid container justify='flex-end'>
                                         <Button size="small" color="primary">
                                             Check Availability
