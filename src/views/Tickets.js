@@ -18,6 +18,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Home from '../views/Datelocation';
 import Typography from '@material-ui/core/Typography';
 import TablePagination from '@material-ui/core/TablePagination';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 
 
@@ -32,7 +36,8 @@ export default class DateLocation extends Component {
             departureTime: 'Departure Time',
             arrivalTime: 'Arrival Time',
             duration: 'Duration',
-
+            adult: '',
+            child:'',
         }
     }
 
@@ -44,8 +49,83 @@ export default class DateLocation extends Component {
         )
     }
 
-    tickets() {
+    Adult() {
+        const classes = makeStyles(theme => ({
+            formControl: {
+                margin: theme.spacing(1),
+                minWidth: 120,
+            },
+            selectEmpty: {
+                marginTop: theme.spacing(2),
+            },
+        }));
 
+        const handleChange = name => event => {
+            this.setState({
+                [name]: event.target.value,
+            });
+        }
+        return (
+            <FormControl required className={classes.formControl}>
+                <InputLabel htmlFor="Adult">Adult</InputLabel>
+                <Select
+                    native
+                    value={this.state.adult}
+                    onChange={handleChange('adult')}
+                    name="adult"
+                    inputProps={{
+                        id: 'Adult',
+                    }}
+                >
+                    <option value="" />
+                    <option value={10}>Ten</option>
+                    <option value={20}>Twenty</option>
+                    <option value={30}>Thirty</option>
+                </Select>
+                {/* <FormHelperText>Required</FormHelperText> */}
+            </FormControl>
+        )
+    }
+    child() {
+        const classes = makeStyles(theme => ({
+            formControl: {
+                margin: theme.spacing(1),
+                minWidth: 120,
+            },
+            selectEmpty: {
+                marginTop: theme.spacing(2),
+            },
+        }));
+
+        const handleChange = name => event => {
+            this.setState({
+                [name]: event.target.value,
+            });
+        }
+        return (
+            <FormControl required className={classes.formControl}>
+                <InputLabel htmlFor="Child">Child</InputLabel>
+                <Select
+                    native
+                    value={this.state.child}
+                    onChange={handleChange('child')}
+                    name="child"
+                    inputProps={{
+                        id: 'Child',
+                    }}
+                >
+                    <option value="" />
+                    <option value={10}>Ten</option>
+                    <option value={20}>Twenty</option>
+                    <option value={30}>Thirty</option>
+                </Select>
+                {/* <FormHelperText>Required</FormHelperText> */}
+            </FormControl>
+        )
+    }
+
+    tickets() {
+        let key = 0;
         const StyledTableCell = withStyles(theme => ({
             head: {
                 backgroundColor: "#0269e8",
@@ -69,7 +149,7 @@ export default class DateLocation extends Component {
         }
 
         const rows = [
-            createData('', ' ', '', ' ', ' '),
+            createData('',<div>{this.Adult()}<br/>{this.child()}</div>, '', ' ', ' '),
             createData('', '', '', ' ', ' '),
             createData('', '', '', ' ', ' '),
             createData('', '', '', ' ', ' '),
@@ -111,10 +191,10 @@ export default class DateLocation extends Component {
                         <Paper className={classes.paper}>
                             <Card>
                                 <CardContent>
-                                    <Typography gutterBottom variant="h6" component="h2">
+                                    <Typography gutterBottom variant="h5" component="h5">
                                         Journey from {this.props.from} to {this.props.to}
                                     </Typography>
-                                    <Typography gutterBottom variant="p" component="p">
+                                    <Typography gutterBottom variant="h6" component="h6">
                                         Date of Departure:
                                                 </Typography>
                                     <Table className={classes.table} aria-label="customized table">
@@ -129,7 +209,7 @@ export default class DateLocation extends Component {
                                         </TableHead>
                                         <TableBody>
                                             {rows.map(row => (
-                                                <StyledTableRow key={row.bus}>
+                                                <StyledTableRow key={key++}>
                                                     <StyledTableCell component="th" scope="row">
                                                         {row.bus}
                                                     </StyledTableCell>
@@ -143,7 +223,7 @@ export default class DateLocation extends Component {
                                     </Table>
                                 </CardContent>
                                 <CardActions>
-                                    <Typography gutterBottom variant="p" component="p">
+                                    <Typography gutterBottom variant="h6" component="h6">
                                         &nbsp;&nbsp;Price:
                                                 </Typography>
                                     <Grid container justify='flex-end'>
