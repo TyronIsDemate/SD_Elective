@@ -1,5 +1,6 @@
 import 'date-fns';
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import Header from '../components/Header';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,13 +16,11 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Home from '../views/Datelocation';
 import Typography from '@material-ui/core/Typography';
-import TablePagination from '@material-ui/core/TablePagination';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Checkout from './Checkout';
 
 
 
@@ -40,6 +39,13 @@ export default class DateLocation extends Component {
             child:'',
         }
     }
+    checkout = () => {
+        if (this.state.adult ==null & this.state.child == null) {
+            alert("Input fields")
+        } else {
+            ReactDOM.render(<Checkout/>, document.getElementById('root'));
+        }
+      };
 
     render() {
         return (
@@ -227,9 +233,7 @@ export default class DateLocation extends Component {
                                         &nbsp;&nbsp;Price:
                                                 </Typography>
                                     <Grid container justify='flex-end'>
-                                        <Button size="small" color="primary">
-                                            Check Availability
-                                    </Button>
+                                    <Button size="small" color="primary" type="submit" onClick={this.checkout} >Checkout</Button>
                                         <Grid container justify='flex-end'>
                                             <Button size="small" color="primary">
                                                 Back

@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import Header from '../components/Header';
+import ReactDOM from 'react-dom';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core/styles';
 import CardActions from '@material-ui/core/CardActions';
@@ -14,6 +15,7 @@ import Home from '../views/Datelocation';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import TextField from '@material-ui/core/TextField';
 import { borders } from '@material-ui/system';
+import Confirm from './Confirm';
 
 
 
@@ -25,6 +27,9 @@ export default class DateLocation extends Component {
 
         }
     }
+    preview = () => {
+            ReactDOM.render(<Confirm/>, document.getElementById('root'));
+      };
 
     render() {
         return (
@@ -187,9 +192,7 @@ export default class DateLocation extends Component {
                                                  &nbsp;&nbsp;Price:
                                                 </Typography>
                                     <Grid container justify='flex-end'>
-                                        <Button size="small" color="primary">
-                                            Preview and Confirm
-                                    </Button>
+                                    <Button size="small" color="primary" type="submit" onClick={this.preview} >Preview & Confirm</Button>
                                         <Grid container justify='flex-end'>
                                             <Button size="small" color="primary">
                                                 Back

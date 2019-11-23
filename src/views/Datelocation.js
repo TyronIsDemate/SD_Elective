@@ -1,5 +1,6 @@
 import 'date-fns';
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import Header from '../components/Header';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,6 +20,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import Link from '@material-ui/core/Link';
+import Tickets from './Tickets';
 
 
 export default class DateLocation extends Component {
@@ -34,6 +37,13 @@ export default class DateLocation extends Component {
             toRequired: 'Destination',
         }
     }
+    checkCredential = () => {
+        if (this.state.date !=null & this.state.date != null) {
+            ReactDOM.render(<Tickets/>, document.getElementById('root'));
+        } else {
+            alert("Input fields")
+        }
+      };
 
     render() {
         return (
@@ -44,6 +54,7 @@ export default class DateLocation extends Component {
     }
 
     datelocation() {
+      
         const date = date => {
             this.setState({ 'date': date })
         };
@@ -58,6 +69,7 @@ export default class DateLocation extends Component {
         const to = to => event => {
             this.setState({ [to]: event.target.value })
         }
+       
 
 
         const classes = makeStyles(theme => ({
@@ -78,6 +90,7 @@ export default class DateLocation extends Component {
                 marginTop: theme.spacing(2),
             },
         }));
+        
         return (
             <div className={classes.root}>
                 <Header />
@@ -166,18 +179,16 @@ export default class DateLocation extends Component {
                                     </MuiPickersUtilsProvider>
                                 </CardContent>
                                 <CardActions>
-                                    <Grid container justify= 'flex-end'>
-                                    <Button size="small" color="primary">
-                                        Check Availability
-                                    </Button>
+                                    <Grid container justify='flex-end'>
+                                    <Button size="small" color="primary" type="submit" onClick={this.checkCredential} >CHECK AVAILABILITY</Button>
                                     </Grid>
                                 </CardActions>
                             </Card>
                         </Paper>
                     </Grid>
-                </Grid>
+                    </Grid>
             </div>
-        )
-    }
-
+                )
+            }
+        
 }
