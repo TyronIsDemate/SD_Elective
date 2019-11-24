@@ -36,17 +36,22 @@ export default class DateLocation extends Component {
             arrivalTime: 'Arrival Time',
             duration: 'Duration',
             adult: '',
-            child:'',
+            child: '',
+            journeyTo: '',
+            journeyFrom: ''
         }
     }
     checkout = () => {
-        if (this.state.adult ==null & this.state.child == null) {
+        if (this.state.adult == null & this.state.child == null) {
             alert("Input fields")
         } else {
-            ReactDOM.render(<Checkout/>, document.getElementById('root'));
+            ReactDOM.render(<Checkout />, document.getElementById('root'));
         }
-      };
-
+    };
+    componentDidMount() {
+        console.log(this.props.location.state.journeyTo)
+        this.setState({journeyTo:this.props.location.state.journeyTo, journeyFrom:this.props.location.state.journeyFrom});
+    }
     render() {
         return (
             <div>
@@ -155,7 +160,7 @@ export default class DateLocation extends Component {
         }
 
         const rows = [
-            createData('',<div>{this.Adult()}<br/>{this.child()}</div>, '', ' ', ' '),
+            createData('', <div>{this.Adult()}<br />{this.child()}</div>, '', ' ', ' '),
             createData('', '', '', ' ', ' '),
             createData('', '', '', ' ', ' '),
             createData('', '', '', ' ', ' '),
@@ -198,7 +203,7 @@ export default class DateLocation extends Component {
                             <Card>
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h5">
-                                        Journey from {this.props.from} to {this.props.to}
+                                        Journey from {this.state.journeyFrom} to {this.state.journeyTo}
                                     </Typography>
                                     <Typography gutterBottom variant="h6" component="h6">
                                         Date of Departure:
@@ -233,7 +238,7 @@ export default class DateLocation extends Component {
                                         &nbsp;&nbsp;Price:
                                                 </Typography>
                                     <Grid container justify='flex-end'>
-                                    <Button size="small" color="primary" type="submit" onClick={this.checkout} >Checkout</Button>
+                                        <Button size="small" color="primary" type="submit" onClick={this.checkout} >Checkout</Button>
                                         <Grid container justify='flex-end'>
                                             <Button size="small" color="primary">
                                                 Back

@@ -1,6 +1,5 @@
 import 'date-fns';
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import Header from '../components/Header';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,8 +19,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
-import Link from '@material-ui/core/Link';
-import Tickets from './Tickets';
+import { Redirect } from "react-router-dom";
+
 
 
 export default class DateLocation extends Component {
@@ -29,23 +28,44 @@ export default class DateLocation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: new Date('2014-08-18T21:11:54').toISOString(),
+            date: new Date().toISOString(),
             time: Date.now(),
-            from: '',
+            from: null,
             fromRequire: 'Starting Location',
-            to: '',
+            to: null,
             toRequired: 'Destination',
+            toTickets:false,
+            toRequiredColor:null,
+            fromRequiredColor:null
         }
     }
     checkCredential = () => {
-        if (this.state.date !=null & this.state.date != null) {
-            ReactDOM.render(<Tickets/>, document.getElementById('root'));
-        } else {
-            alert("Input fields")
+        if (this.state.from !== null && this.state.to !== null){
+            this.setState({toTickets:true});
+        }
+        if(this.state.from == null){
+            this.setState({fromRequire:"Required field"})
+            this.setState({fromRequiredColor:{
+                color:"red"
+            }})
+        }
+        if(this.state.to == null){
+            this.setState({toRequired:"Required Field"});
+            this.setState({toRequiredColor:{
+                color:"red"
+            }})
+        }
+        if(this.state.from == null && this.state.to == null){
+            this.setState({fromRequire:"Required field", toRequired:"Required field"})
         }
       };
 
     render() {
+        if (this.state.toTickets) {
+            //go to the Ticket Component
+            this.setState({toRequiredColor:{color:"black"},fromRequiredColor:{color:"black"}})
+            return <Redirect to={{ pathname: "/Tickets", state: {journeyTo:this.state.to,journeyFrom:this.state.from} }} />
+        }
         return (
             <div>
                 {this.datelocation()}
@@ -54,7 +74,6 @@ export default class DateLocation extends Component {
     }
 
     datelocation() {
-      
         const date = date => {
             this.setState({ 'date': date })
         };
@@ -150,7 +169,7 @@ export default class DateLocation extends Component {
                                                         <option value={'SM Seaside'}>SM Seaside</option>
                                                         <option value={'SM City'}>SM City</option>
                                                     </NativeSelect>
-                                                    <FormHelperText>{this.state.fromRequire}</FormHelperText>
+                                                    <FormHelperText style={this.state.fromRequiredColor}>{this.state.fromRequire}</FormHelperText>
                                                 </FormControl>
                                             </Grid>
                                             <Grid>
@@ -172,7 +191,7 @@ export default class DateLocation extends Component {
                                                         <option value={'Sanremo'}>Sanremo</option>
                                                         <option value={'Mactan Airport'}>Mactan Airport</option>
                                                     </NativeSelect>
-                                                    <FormHelperText>{this.state.toRequired}</FormHelperText>
+                                                    <FormHelperText style={this.state.toRequiredColor}>{this.state.toRequired}</FormHelperText>
                                                 </FormControl>
                                             </Grid>
                                         </Grid>
