@@ -160,7 +160,7 @@ export default class DateLocation extends Component {
         }
 
         const rows = [
-            createData('', <div>{this.Adult()}<br />{this.child()}</div>, '', ' ', ' '),
+            createData('', <div>{this.Adult()}&nbsp;&nbsp;&nbsp;&nbsp;{this.child()}<h6 align="left">Child Price: </h6><h6 align="left">Adult Price: </h6></div>, '', ' ', ' '),
             createData('', '', '', ' ', ' '),
             createData('', '', '', ' ', ' '),
             createData('', '', '', ' ', ' '),
@@ -212,10 +212,10 @@ export default class DateLocation extends Component {
                                         <TableHead>
                                             <TableRow>
                                                 <StyledTableCell>Bus</StyledTableCell>
-                                                <StyledTableCell align="right">Available Seats</StyledTableCell>
-                                                <StyledTableCell align="right">Departure Time</StyledTableCell>
-                                                <StyledTableCell align="right">Arrival Time</StyledTableCell>
-                                                <StyledTableCell align="right">Duration</StyledTableCell>
+                                                <StyledTableCell align="center">Available Seats</StyledTableCell>
+                                                <StyledTableCell align="center">Departure Time</StyledTableCell>
+                                                <StyledTableCell align="center">Arrival Time</StyledTableCell>
+                                                <StyledTableCell align="center">Duration</StyledTableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
@@ -224,10 +224,10 @@ export default class DateLocation extends Component {
                                                     <StyledTableCell component="th" scope="row">
                                                         {row.bus}
                                                     </StyledTableCell>
-                                                    <StyledTableCell align="right">{row.availableSeat}</StyledTableCell>
-                                                    <StyledTableCell align="right">{row.departureTime}</StyledTableCell>
-                                                    <StyledTableCell align="right">{row.arrivalTime}</StyledTableCell>
-                                                    <StyledTableCell align="right">{row.duration}</StyledTableCell>
+                                                    <StyledTableCell align="center">{row.availableSeat}</StyledTableCell>
+                                                    <StyledTableCell align="center">{row.departureTime}</StyledTableCell>
+                                                    <StyledTableCell align="center">{row.arrivalTime}</StyledTableCell>
+                                                    <StyledTableCell align="center">{row.duration}</StyledTableCell>
                                                 </StyledTableRow>
                                             ))}
                                         </TableBody>
