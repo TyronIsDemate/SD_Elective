@@ -30,29 +30,29 @@ export default class DateLocation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            bus: 'Bus',
-            availableSeat: 'Available Seats',
-            departureTime: 'Departure Time',
-            arrivalTime: 'Arrival Time',
-            duration: 'Duration',
-            adult: '',
-            child: '',
-            journeyTo: '',
-            journeyFrom: '',
-            petsa: '',
+            bus: "",
+            availableSeat: "",
+            departureTime: "",
+            arrivalTime: "",
+            duration: "",
+            adult: "",
+            child: "",
+            journeyTo: "",
+            journeyFrom: "",
+            petsa: "",
         }
     }
     checkout = () => {
-        if (this.state.adult == null & this.state.child == null) {
+        if (this.state.adult === "" & this.state.child === "") {
             alert("Input fields")
         } else {
             ReactDOM.render(<Checkout />, document.getElementById('root'));
         }
     };
     componentDidMount() {
-        console.log(this.props.location.state.journeyTo)
-        this.setState({journeyTo:this.props.location.state.journeyTo, journeyFrom:this.props.location.state.journeyFrom});
-        this.setState({petsa:this.props.location.state.petsa});
+        this.setState({journeyTo : this.props.location.state.journeyTo, 
+            journeyFrom : this.props.location.state.journeyFrom,
+            petsa : this.props.location.state.petsa});
     }
     render() {
         return (

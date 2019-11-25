@@ -1,7 +1,5 @@
-
 import React, { Component } from 'react';
 import Header from '../components/Header';
-import ReactDOM from 'react-dom';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core/styles';
 import CardActions from '@material-ui/core/CardActions';
@@ -11,11 +9,9 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Navigation from '../components/navigationBar';
 import Typography from '@material-ui/core/Typography';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import TextField from '@material-ui/core/TextField';
 import { Redirect } from "react-router-dom";
-import Confirm from './Confirm';
 
 
 
@@ -24,67 +20,80 @@ export default class DateLocation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstname: null,
-            lastname: null,
-            phone: null,
-            email: null,
-            toCheckout : false,
-            fnameColor : null,
-            lnameColor : null,
-            phoneColor : null,
-            emailColor : null,
-            payment: null
-
-
+            firstname: "",
+            lastname: "",
+            phone: "",
+            email: "",
+            payment: "",
+            toCheckout: false,
+            fnameColor: null,
+            lnameColor: null,
+            phoneColor: null,
+            emailColor: null,
+            paymentColor: null,
+            requiredfname: "",
+            requiredlname: "",
+            requiredgmail: "",
+            requiredcp: "",
+            requiredpay: ""
         }
     }
-    checkInformation = () =>{
-        if(this.state.firstname !== null && this.state.lastname !== null && this.state.phone !== null && this.state.email !== null && this.state.payment !== null){
-            this.setState({toCheckout:true});
+    checkInformation = () => {
+        if (this.state.firstname !== "" && this.state.lastname !== "" && this.state.phone !== "" && this.state.email !== "" && this.state.payment !== "") {
+            this.setState({ toCheckout: true });
         }
-        if(this.state.firstname == null){
-            this.setState({fname: "This field is required"})
-            this.setState({fnameColor:{
-                color:'red'
-            }})
+        if (this.state.firstname === "") {
+            this.setState({ requiredfname: "This field is required" })
+            this.setState({
+                fnameColor: {
+                    color: 'red'
+                }
+            })
         }
-        if(this.state.lastname == null){
-            this.setState({lname: "This field is required"})
-            this.setState({lnameColor:{
-                color:'red'
-            }})
+        if (this.state.lastname === "") {
+            console.log("lastname color")
+            this.setState({ requiredlname: "This field is required" })
+            this.setState({
+                lnameColor: {
+                    color: 'red'
+                }
+            })
         }
-        if(this.state.email == null){
-            this.setState({gmail: "This field is required"})
-            this.setState({emailColor:{
-                color:'red'
-            }})
+        if (this.state.email === "") {
+            this.setState({ requiredgmail: "This field is required" })
+            this.setState({
+                emailColor: {
+                    color: 'red'
+                }
+            })
         }
-        if(this.state.phone == null){
-            this.setState({cp: "This field is required"})
-            this.setState({phoneColor:{
-                color:'red'
-            }})
+        if (this.state.phone === "") {
+            this.setState({ requiredcp: "This field is required" })
+            this.setState({
+                phoneColor: {
+                    color: 'red'
+                }
+            })
         }
-        if(this.state.payment == null){
-            this.setState({pay: "This field is required"})
-            this.setState({paymentColor:{
-                color:'red'
-            }})
+        if (this.state.payment === "") {
+            console.log("phone color")
+            this.setState({ requiredpay: "This field is required" })
+            this.setState({
+                paymentColor: {
+                    color: 'red'
+                }
+            })
         }
-        if(this.state.firstname == null && this.state.lastname == null && this.state.phone == null && this.state.email == null && this.state.payment){
-            this.setState({fname:"This field is required", lname:"This field is required", gmail:"This field is required", cp:"This field is required", pay: "This field is required"})
-        }
+        // if (this.state.firstname === null && this.state.lastname === null && this.state.phone === null && this.state.email === null && this.state.payment) {
+        //     this.setState({ requiredfname: "This field is required", requiredlname: "This field is required", requiredgmail: "This field is required", requiredcp: "This field is required", requiredpay: "This field is required" })
+        // }
     }
-    // preview = () => {
-    //         ReactDOM.render(<Confirm/>, document.getElementById('root'));
-    //   };
 
     render() {
         if (this.state.toCheckout) {
             //go to the Checkout Component
-            this.setState({fnameColor:{color:"black"},lnameColor:{color:"black"},emailColor:{color:"black"},phoneColor:{color:"black"},paymentColor:{color:"black"}})
-            return <Redirect to={{ pathname: "/Confirm", state: {fname:this.state.firstname,lname:this.state.lastname,gmail:this.state.email,cp:this.state.phone,pay:this.state.payment} }} />
+            this.setState({ fnameColor: { color: "black" }, lnameColor: { color: "black" }, emailColor: { color: "black" }, phoneColor: { color: "black" }, paymentColor: { color: "black" } })
+            return <Redirect to={{ pathname: "/Confirm", state: { fname: this.state.firstname, lname: this.state.lastname, gmail: this.state.email, cp: this.state.phone, pay: this.state.payment } }} />
         }
         return (
             <div>
@@ -188,7 +197,8 @@ export default class DateLocation extends Component {
                                             }}
                                         />
                                     </Grid>
-                                    <FormHelperText style={this.state.fnameColor}></FormHelperText>
+                                    {/* <Typography gutterBottom variant="h6" component="h6" style={this.state.fnameColor}>{this.state.requiredfname}</Typography> */}
+                                        <p style={this.state.fnameColor}>{this.state.requiredfname}</p>
                                     <Grid style={{ width: '98%' }}>
                                         <TextField
                                             id="outlined-basic"
@@ -201,8 +211,10 @@ export default class DateLocation extends Component {
                                                 width: '100%'
                                             }}
                                         />
+
                                     </Grid>
-                                    <FormHelperText style={this.state.lnameColor}></FormHelperText>
+                                    {/* <Typography gutterBottom variant="h6" component="h6">{this.state.requiredlname}</Typography> */}
+                                        <p style={this.state.lnamecolor}>{this.state.requiredlname}</p>
                                     <Grid style={{ width: '98%' }}>
                                         <TextField
                                             id="outlined-basic"
@@ -215,8 +227,9 @@ export default class DateLocation extends Component {
                                                 width: '100%'
                                             }}
                                         />
-                                         <FormHelperText style={this.state.phoneColor}></FormHelperText>
                                     </Grid>
+                                    {/* <Typography gutterBottom variant="h6" component="h6">{this.state.requiredcp}</Typography> */}
+                                    <p style={this.state.cpColor}>{this.state.requiredcp}</p>
                                     <Grid style={{ width: '98%' }}>
                                         <TextField
                                             id="outlined-basic"
@@ -229,12 +242,13 @@ export default class DateLocation extends Component {
                                                 width: '100%'
                                             }}
                                         />
-                                         <FormHelperText style={this.state.emailColor}></FormHelperText>
                                     </Grid>
+                                    {/* <Typography gutterBottom variant="h6" component="h6">{this.state.requiredgmail}</Typography> */}
+                                    <p style={this.state.emailColor}>{this.state.requiredgmail}</p>
                                     <Grid style={{ width: '98%' }}>
                                         <TextField
                                             id="outlined-basic"
-                                            value= {this.state.payment}
+                                            value={this.state.payment}
                                             className={classes.textField}
                                             label="Payment Method"
                                             margin="normal"
@@ -243,8 +257,9 @@ export default class DateLocation extends Component {
                                                 width: '100%'
                                             }}
                                         />
-                                         <FormHelperText style={this.state.paymentColor}></FormHelperText>
                                     </Grid>
+                                    {/* <Typography gutterBottom variant="h6" component="h6">{this.state.requiredpay}</Typography> */}
+                                    <p style={this.state.paymentColor}>{this.state.requiredlname}</p>
                                 </Grid>
                                 <br></br>
                                 <br></br>
@@ -252,11 +267,11 @@ export default class DateLocation extends Component {
                             </Grid>
                             <Card>
                                 <CardActions>
-                                <Typography gutterBottom variant="h6" component="h6">
-                                                 &nbsp;&nbsp;Price:
+                                    <Typography gutterBottom variant="h6" component="h6">
+                                        &nbsp;&nbsp;Price:
                                                 </Typography>
                                     <Grid container justify='flex-end'>
-                                    <Button size="small" color="primary" type="submit" onClick={this.checkInformation} >Preview & Confirm</Button>
+                                        <Button size="small" color="primary" type="submit" onClick={this.checkInformation} >Preview & Confirm</Button>
                                         <Grid container justify='flex-end'>
                                             <Button size="small" color="primary">
                                                 Back

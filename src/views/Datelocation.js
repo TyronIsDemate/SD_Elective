@@ -28,11 +28,11 @@ export default class DateLocation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: new Date().toISOString(),
+            date: new Date(),
             time: Date.now(),
-            from: null,
+            from: "",
             fromRequire: 'Starting Location',
-            to: null,
+            to: "",
             toRequired: 'Destination',
             toTickets:false,
             toRequiredColor:null,
@@ -40,6 +40,7 @@ export default class DateLocation extends Component {
         }
     }
     checkCredential = () => {
+        console.log(this.state.date)
         if (this.state.from !== null && this.state.to !== null && this.state.date !== null){
             this.setState({toTickets:true});
         }
@@ -64,7 +65,8 @@ export default class DateLocation extends Component {
         if (this.state.toTickets) {
             //go to the Ticket Component
             this.setState({toRequiredColor:{color:"black"},fromRequiredColor:{color:"black"}})
-            return <Redirect to={{ pathname: "/Tickets", state: {journeyTo:this.state.to,journeyFrom:this.state.from,petsa:this.state.date} }} />
+            return <Redirect to={{ pathname: "/Tickets", state: {journeyTo : this.state.to, 
+                journeyFrom : this.state.from, petsa : this.state.date} }} />
         }
         return (
             <div>
@@ -75,7 +77,7 @@ export default class DateLocation extends Component {
 
     datelocation() {
         const date = date => {
-            this.setState({ 'date': date })
+            this.setState({ 'date': date.toDateString() })
         };
 
         const time = time => {
