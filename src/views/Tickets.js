@@ -38,7 +38,8 @@ export default class DateLocation extends Component {
             adult: '',
             child: '',
             journeyTo: '',
-            journeyFrom: ''
+            journeyFrom: '',
+            petsa: '',
         }
     }
     checkout = () => {
@@ -51,6 +52,7 @@ export default class DateLocation extends Component {
     componentDidMount() {
         console.log(this.props.location.state.journeyTo)
         this.setState({journeyTo:this.props.location.state.journeyTo, journeyFrom:this.props.location.state.journeyFrom});
+        this.setState({petsa:this.props.location.state.petsa});
     }
     render() {
         return (
@@ -170,6 +172,9 @@ export default class DateLocation extends Component {
         const classes = makeStyles(theme => ({
             root: {
                 flexGrow: 1,
+                width: '100%',
+                marginTop: theme.spacing(3),
+                overflowX: 'auto',
             },
             paper: {
                 height: 100,
@@ -184,11 +189,6 @@ export default class DateLocation extends Component {
             selectEmpty: {
                 marginTop: theme.spacing(2),
             },
-            root: {
-                width: '100%',
-                marginTop: theme.spacing(3),
-                overflowX: 'auto',
-            },
             table: {
                 minWidth: 700,
             },
@@ -202,11 +202,11 @@ export default class DateLocation extends Component {
                         <Paper className={classes.paper}>
                             <Card>
                                 <CardContent>
-                                    <Typography gutterBottom variant="h5" component="h5">
-                                        Journey from {this.state.journeyFrom} to {this.state.journeyTo}
+                                    <Typography gutterBottom variant="h6" component="h6">
+                                        <b></b>Journey from {this.state.journeyFrom} to {this.state.journeyTo}
                                     </Typography>
                                     <Typography gutterBottom variant="h6" component="h6">
-                                        Date of Departure:
+                                        Date of Departure: {this.state.petsa}
                                                 </Typography>
                                     <Table className={classes.table} aria-label="customized table">
                                         <TableHead>

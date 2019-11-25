@@ -22,11 +22,20 @@ export default class DateLocation extends Component {
     constructor(props) {
         super(props);
         this.state = {
+        fname : ' ',
+        lname : ' ',
+        gmail : ' ',
+        cp: ' ',
+        pay: ' ',
 
         }
     }
     confirm = () => {
             ReactDOM.render(<Final/>, document.getElementById('root'));
+    }
+    componentDidMount() {
+        console.log(this.props.location.state.fname)
+        this.setState({fname:this.props.location.state.fname, lname:this.props.location.state.lname,gmail:this.props.location.state.gmail,cp:this.props.location.state.cp,pay:this.props.location.state.pay});
     }
 
     render() {
@@ -126,24 +135,24 @@ export default class DateLocation extends Component {
                                     <Card style={{ width: '97%' }}>
                                         <CardContent>
                                             <Grid>
-                                                <Typography gutterBottom variant="h6" component="h2">
-                                                    Personal Details
+                                                <Typography gutterBottom variant="h6" component="h6">
+                                                    <b>Personal Details</b>
                                                 </Typography>
                                                 <Grid>
-                                                    <Typography gutterBottom variant="p" component="p">
-                                                        First Name :
+                                                    <Typography gutterBottom variant="h6" component="h6">
+                                                        First Name : {this.state.fname}
                                                 </Typography>
-                                                    <Typography gutterBottom variant="p" component="p">
-                                                        Last Name :
+                                                    <Typography gutterBottom variant="h6" component="h6">
+                                                        Last Name : {this.state.lname}
                                                 </Typography>
-                                                    <Typography gutterBottom variant="p" component="p">
-                                                        Phone :
+                                                    <Typography gutterBottom variant="h6" component="h6">
+                                                        Phone : {this.state.cp}
                                                 </Typography>
-                                                    <Typography gutterBottom variant="p" component="p">
-                                                        Email :
+                                                    <Typography gutterBottom variant="h6" component="h6">
+                                                        Email : {this.state.gmail}
                                                 </Typography>
-                                                <Typography gutterBottom variant="p" component="p">
-                                                        Payment Method :
+                                                <Typography gutterBottom variant="h6" component="h6">
+                                                        Payment Method : {this.state.pay}
                                                 </Typography>
                                                 
                                                 </Grid>
@@ -158,7 +167,7 @@ export default class DateLocation extends Component {
                             <hr style={{ width: '96%' }}></hr>
                             <Card>
                                 <CardActions>
-                                <Typography gutterBottom variant="p" component="p">
+                                <Typography gutterBottom variant="h6" component="h6">
                                                  &nbsp;&nbsp;Price:
                                                 </Typography>
                                     <Grid container justify='flex-end'>

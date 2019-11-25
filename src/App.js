@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import Home from './views/Datelocation';
 import Tickets from './views/Tickets';

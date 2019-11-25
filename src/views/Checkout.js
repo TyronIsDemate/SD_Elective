@@ -11,10 +11,10 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Navigation from '../components/navigationBar';
 import Typography from '@material-ui/core/Typography';
-import Home from '../views/Datelocation';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import TextField from '@material-ui/core/TextField';
-import { borders } from '@material-ui/system';
+import { Redirect } from "react-router-dom";
 import Confirm from './Confirm';
 
 
@@ -24,14 +24,68 @@ export default class DateLocation extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            firstname: null,
+            lastname: null,
+            phone: null,
+            email: null,
+            toCheckout : false,
+            fnameColor : null,
+            lnameColor : null,
+            phoneColor : null,
+            emailColor : null,
+            payment: null
+
 
         }
     }
-    preview = () => {
-            ReactDOM.render(<Confirm/>, document.getElementById('root'));
-      };
+    checkInformation = () =>{
+        if(this.state.firstname !== null && this.state.lastname !== null && this.state.phone !== null && this.state.email !== null && this.state.payment !== null){
+            this.setState({toCheckout:true});
+        }
+        if(this.state.firstname == null){
+            this.setState({fname: "This field is required"})
+            this.setState({fnameColor:{
+                color:'red'
+            }})
+        }
+        if(this.state.lastname == null){
+            this.setState({lname: "This field is required"})
+            this.setState({lnameColor:{
+                color:'red'
+            }})
+        }
+        if(this.state.email == null){
+            this.setState({gmail: "This field is required"})
+            this.setState({emailColor:{
+                color:'red'
+            }})
+        }
+        if(this.state.phone == null){
+            this.setState({cp: "This field is required"})
+            this.setState({phoneColor:{
+                color:'red'
+            }})
+        }
+        if(this.state.payment == null){
+            this.setState({pay: "This field is required"})
+            this.setState({paymentColor:{
+                color:'red'
+            }})
+        }
+        if(this.state.firstname == null && this.state.lastname == null && this.state.phone == null && this.state.email == null && this.state.payment){
+            this.setState({fname:"This field is required", lname:"This field is required", gmail:"This field is required", cp:"This field is required", pay: "This field is required"})
+        }
+    }
+    // preview = () => {
+    //         ReactDOM.render(<Confirm/>, document.getElementById('root'));
+    //   };
 
     render() {
+        if (this.state.toCheckout) {
+            //go to the Checkout Component
+            this.setState({fnameColor:{color:"black"},lnameColor:{color:"black"},emailColor:{color:"black"},phoneColor:{color:"black"},paymentColor:{color:"black"}})
+            return <Redirect to={{ pathname: "/Confirm", state: {fname:this.state.firstname,lname:this.state.lastname,gmail:this.state.email,cp:this.state.phone,pay:this.state.payment} }} />
+        }
         return (
             <div>
                 {this.tickets()}
@@ -124,6 +178,7 @@ export default class DateLocation extends Component {
                                     <Grid style={{ width: '98%' }}>
                                         <TextField
                                             id="outlined-basic"
+                                            value={this.state.firstname}
                                             className={classes.textField}
                                             label="First Name"
                                             margin="normal"
@@ -133,9 +188,11 @@ export default class DateLocation extends Component {
                                             }}
                                         />
                                     </Grid>
+                                    <FormHelperText style={this.state.fnameColor}></FormHelperText>
                                     <Grid style={{ width: '98%' }}>
                                         <TextField
                                             id="outlined-basic"
+                                            value={this.state.lastname}
                                             className={classes.textField}
                                             label="Last Name"
                                             margin="normal"
@@ -145,9 +202,11 @@ export default class DateLocation extends Component {
                                             }}
                                         />
                                     </Grid>
+                                    <FormHelperText style={this.state.lnameColor}></FormHelperText>
                                     <Grid style={{ width: '98%' }}>
                                         <TextField
                                             id="outlined-basic"
+                                            value={this.state.phone}
                                             className={classes.textField}
                                             label="Phone Number"
                                             margin="normal"
@@ -156,10 +215,12 @@ export default class DateLocation extends Component {
                                                 width: '100%'
                                             }}
                                         />
+                                         <FormHelperText style={this.state.phoneColor}></FormHelperText>
                                     </Grid>
                                     <Grid style={{ width: '98%' }}>
                                         <TextField
                                             id="outlined-basic"
+                                            value={this.state.email}
                                             className={classes.textField}
                                             label="Email"
                                             margin="normal"
@@ -168,10 +229,12 @@ export default class DateLocation extends Component {
                                                 width: '100%'
                                             }}
                                         />
+                                         <FormHelperText style={this.state.emailColor}></FormHelperText>
                                     </Grid>
                                     <Grid style={{ width: '98%' }}>
                                         <TextField
                                             id="outlined-basic"
+                                            value= {this.state.payment}
                                             className={classes.textField}
                                             label="Payment Method"
                                             margin="normal"
@@ -180,6 +243,7 @@ export default class DateLocation extends Component {
                                                 width: '100%'
                                             }}
                                         />
+                                         <FormHelperText style={this.state.paymentColor}></FormHelperText>
                                     </Grid>
                                 </Grid>
                                 <br></br>
@@ -188,11 +252,11 @@ export default class DateLocation extends Component {
                             </Grid>
                             <Card>
                                 <CardActions>
-                                <Typography gutterBottom variant="p" component="p">
+                                <Typography gutterBottom variant="h6" component="h6">
                                                  &nbsp;&nbsp;Price:
                                                 </Typography>
                                     <Grid container justify='flex-end'>
-                                    <Button size="small" color="primary" type="submit" onClick={this.preview} >Preview & Confirm</Button>
+                                    <Button size="small" color="primary" type="submit" onClick={this.checkInformation} >Preview & Confirm</Button>
                                         <Grid container justify='flex-end'>
                                             <Button size="small" color="primary">
                                                 Back

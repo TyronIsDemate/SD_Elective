@@ -40,7 +40,7 @@ export default class DateLocation extends Component {
         }
     }
     checkCredential = () => {
-        if (this.state.from !== null && this.state.to !== null){
+        if (this.state.from !== null && this.state.to !== null && this.state.date !== null){
             this.setState({toTickets:true});
         }
         if(this.state.from == null){
@@ -64,7 +64,7 @@ export default class DateLocation extends Component {
         if (this.state.toTickets) {
             //go to the Ticket Component
             this.setState({toRequiredColor:{color:"black"},fromRequiredColor:{color:"black"}})
-            return <Redirect to={{ pathname: "/Tickets", state: {journeyTo:this.state.to,journeyFrom:this.state.from} }} />
+            return <Redirect to={{ pathname: "/Tickets", state: {journeyTo:this.state.to,journeyFrom:this.state.from,petsa:this.state.date} }} />
         }
         return (
             <div>
