@@ -103,29 +103,37 @@ input.error {
   display: relative;
 }
 
-.fullName {
+.firstname {
   margin-right: 1%;
+  margin-top: 2em;
 }
 
-.fullName,
+.firstname,
 .email,
-.password {
+.lastname,
+.pay,
+.phone {
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
 }
-
-.fullName {
+.firstname,
+.email,
+.lastname,
+.pay,
+.phone,
+.firstname{
   width: 100%;
 }
 
-.email,
+/* .email,
 .password {
   width: 100%;
-}
+} */
 
 .submit {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  text-align: right;
 }

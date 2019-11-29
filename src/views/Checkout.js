@@ -15,6 +15,7 @@ import { Redirect } from "react-router-dom";
 
 
 const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+const phoneno = /^\d{10}$/;
 const validateForm = (errors) => {
     let valid = true;
     Object.values(errors).forEach(
@@ -39,9 +40,11 @@ export default class DateLocation extends Component {
             formValid: false,
             errorCount: null,
             errors: {
-                fullName: '',
+                firstname: '',
+                lastname: '',
                 email: '',
-                password: '',
+                phone: '',
+                pay: '',
             }
         };
     }
@@ -52,8 +55,14 @@ export default class DateLocation extends Component {
         let errors = this.state.errors;
 
         switch (name) {
-            case 'fullName':
-                errors.fullName =
+            case 'firstname':
+                errors.firstname =
+                    value.length < 5
+                        ? 'Full Name must be 5 characters long!'
+                        : '';
+                break;
+            case 'lastname':
+                errors.lastname =
                     value.length < 5
                         ? 'Full Name must be 5 characters long!'
                         : '';
@@ -64,11 +73,17 @@ export default class DateLocation extends Component {
                         ? ''
                         : 'Email is not valid!';
                 break;
-            case 'password':
-                errors.password =
-                    value.length < 8
-                        ? 'Password must be 8 characters long!'
-                        : '';
+            case 'phone':
+                errors.phone =
+                    phoneno.test(value)
+                        ? ''
+                        : 'You only need to input numbers';
+                break;
+            case 'pay':
+                errors.pay =
+                    phoneno.test(value)
+                        ? ''
+                        : 'You only need to input numbers';
                 break;
             default:
                 break;
@@ -166,11 +181,17 @@ export default class DateLocation extends Component {
                                 </Grid>
                                 <center>
                                     <form onSubmit={this.handleSubmit} noValidate>
-                                        <div className='fullName'>
-                                            <label className='fName' htmlFor="fullName">Full Name</label>
-                                            <input type='text' name='fullName' onChange={this.handleChange} noValidate />
-                                            {errors.fullName.length > 0 &&
-                                                <span className='error'>{errors.fullName}</span>}
+                                        <div className='firstname'>
+                                            <label className='firstname' htmlFor="firstname">Firstname</label>
+                                            <input type='text' name='firstname' onChange={this.handleChange} noValidate />
+                                            {errors.firstname.length > 0 &&
+                                                <span className='error'>{errors.firstname}</span>}
+                                        </div>
+                                        <div className='lastname'>
+                                            <label className='lastname' htmlFor="lastname">Lastname</label>
+                                            <input type='text' name='lastname' onChange={this.handleChange} noValidate />
+                                            {errors.lastname.length > 0 &&
+                                                <span className='error'>{errors.lastname}</span>}
                                         </div>
                                         <div className='email'>
                                             <label htmlFor="email">Email</label>
@@ -178,28 +199,34 @@ export default class DateLocation extends Component {
                                             {errors.email.length > 0 &&
                                                 <span className='error'>{errors.email}</span>}
                                         </div>
-                                        <div className='password'>
-                                            <label htmlFor="password">Password</label>
-                                            <input type='password' name='password' onChange={this.handleChange} noValidate />
-                                            {errors.password.length > 0 &&
-                                                <span className='error'>{errors.password}</span>}
+                                        <div className='phone'>
+                                            <label className='phone' htmlFor="phone">Phone</label>
+                                            <input type='text' name='phone' onChange={this.handleChange} noValidate />
+                                            {errors.phone.length > 0 &&
+                                                <span className='error'>{errors.phone}</span>}
                                         </div>
-                                        <Typography gutterBottom variant="h6" component="h6">
-                                        &nbsp;&nbsp;Price:
-                                                </Typography>
-                                        <div className='submit'>
-                                            <button>Preview & Confirm</button>
+                                        <div className='pay'>
+                                            <label htmlFor="pay">Payment Method</label>
+                                            <input type='text' name='pay' onChange={this.handleChange} noValidate />
+                                            {errors.pay.length > 0 &&
+                                                <span className='error'>{errors.pay}</span>}
                                         </div>
-                                        {this.state.errorCount !== null ? <p className="form-status">Form is {formValid ? 'valid ✅' : 'invalid ❌'}</p> : 'Form not submitted'}
+                                        <br></br>
+                                        <br></br>
 
-                                    <br></br>
-                                <br></br>
-                                <hr style={{ width: '96%' }}></hr>
+                                        <hr style={{ width: '96%' }}></hr>
                                     </form>
                                 </center>
-                       
+                                <Typography style={{ textAlign: 'right' }} gutterBottom variant="h6" component="h6">
+                                    &nbsp;&nbsp;Price:
+                                                </Typography>
+                                    <div className='submit' style={{textAlign:'center'}}>
+                                        <button>Preview & Confirm</button>
+                                    </div>
+                                    {this.state.errorCount !== null ? <p className="form-status">Form is {formValid ? 'valid ✅' : 'invalid ❌'}</p> : 'Form not submitted'}
 
-                                    </Grid>
+
+                            </Grid>
 
                         </Paper>
                     </Grid>
