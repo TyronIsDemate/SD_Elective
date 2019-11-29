@@ -14,97 +14,78 @@ import TextField from '@material-ui/core/TextField';
 import { Redirect } from "react-router-dom";
 
 
+const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+const validateForm = (errors) => {
+    let valid = true;
+    Object.values(errors).forEach(
+        (val) => val.length > 0 && (valid = false)
+    );
+    return valid;
+}
+
+const countErrors = (errors) => {
+    let count = 0;
+    Object.values(errors).forEach(
+        (val) => val.length > 0 && (count = count + 1)
+    );
+    return count;
+}
 
 export default class DateLocation extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            firstname: "",
-            lastname: "",
-            phone: "",
-            email: "",
-            payment: "",
-            toCheckout: false,
-            fnameColor: null,
-            lnameColor: null,
-            phoneColor: null,
-            emailColor: null,
-            paymentColor: null,
-            requiredfname: "",
-            requiredlname: "",
-            requiredgmail: "",
-            requiredcp: "",
-            requiredpay: ""
-        }
+            formValid: false,
+            errorCount: null,
+            errors: {
+                fullName: '',
+                email: '',
+                password: '',
+            }
+        };
     }
-    checkInformation = () => {
-        if (this.state.firstname !== "" && this.state.lastname !== "" && this.state.phone !== "" && this.state.email !== "" && this.state.payment !== "") {
-            this.setState({ toCheckout: true });
+
+    handleChange = (event) => {
+        event.preventDefault();
+        const { name, value } = event.target;
+        let errors = this.state.errors;
+
+        switch (name) {
+            case 'fullName':
+                errors.fullName =
+                    value.length < 5
+                        ? 'Full Name must be 5 characters long!'
+                        : '';
+                break;
+            case 'email':
+                errors.email =
+                    validEmailRegex.test(value)
+                        ? ''
+                        : 'Email is not valid!';
+                break;
+            case 'password':
+                errors.password =
+                    value.length < 8
+                        ? 'Password must be 8 characters long!'
+                        : '';
+                break;
+            default:
+                break;
         }
-        if (this.state.firstname === "") {
-            this.setState({ requiredfname: "This field is required" })
-            this.setState({
-                fnameColor: {
-                    color: 'red'
-                }
-            })
-        }
-        if (this.state.lastname === "") {
-            console.log("lastname color")
-            this.setState({ requiredlname: "This field is required" })
-            this.setState({
-                lnameColor: {
-                    color: 'red'
-                }
-            })
-        }
-        if (this.state.email === "") {
-            this.setState({ requiredgmail: "This field is required" })
-            this.setState({
-                emailColor: {
-                    color: 'red'
-                }
-            })
-        }
-        if (this.state.phone === "") {
-            this.setState({ requiredcp: "This field is required" })
-            this.setState({
-                phoneColor: {
-                    color: 'red'
-                }
-            })
-        }
-        if (this.state.payment === "") {
-            console.log("phone color")
-            this.setState({ requiredpay: "This field is required" })
-            this.setState({
-                paymentColor: {
-                    color: 'red'
-                }
-            })
-        }
-        // if (this.state.firstname === null && this.state.lastname === null && this.state.phone === null && this.state.email === null && this.state.payment) {
-        //     this.setState({ requiredfname: "This field is required", requiredlname: "This field is required", requiredgmail: "This field is required", requiredcp: "This field is required", requiredpay: "This field is required" })
-        // }
+
+        this.setState({ errors, [name]: value });
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        this.setState({ formValid: validateForm(this.state.errors) });
+        this.setState({ errorCount: countErrors(this.state.errors) });
     }
 
     render() {
-        if (this.state.toCheckout) {
-            //go to the Checkout Component
-            this.setState({ fnameColor: { color: "black" }, lnameColor: { color: "black" }, emailColor: { color: "black" }, phoneColor: { color: "black" }, paymentColor: { color: "black" } })
-            return <Redirect to={{ pathname: "/Confirm", state: { fname: this.state.firstname, lname: this.state.lastname, gmail: this.state.email, cp: this.state.phone, pay: this.state.payment } }} />
-        }
-        return (
-            <div>
-                {this.tickets()}
-            </div>
-        )
-    }
 
-    tickets() {
-
-
+        const { errors, formValid } = this.state;
         const classes = makeStyles(theme => ({
             root: {
                 flexGrow: 1,
@@ -183,103 +164,42 @@ export default class DateLocation extends Component {
                                         </CardActionArea>
                                     </Card>
                                 </Grid>
-                                <Grid container style={{ width: '98%', marginTop: '50px' }} justify="space-around">
-                                    <Grid style={{ width: '98%' }}>
-                                        <TextField
-                                            id="outlined-basic"
-                                            value={this.state.firstname}
-                                            className={classes.textField}
-                                            label="First Name"
-                                            margin="normal"
-                                            variant="outlined"
-                                            style={{
-                                                width: '100%'
-                                            }}
-                                        />
-                                    </Grid>
-                                    {/* <Typography gutterBottom variant="h6" component="h6" style={this.state.fnameColor}>{this.state.requiredfname}</Typography> */}
-                                        <p style={this.state.fnameColor}>{this.state.requiredfname}</p>
-                                    <Grid style={{ width: '98%' }}>
-                                        <TextField
-                                            id="outlined-basic"
-                                            value={this.state.lastname}
-                                            className={classes.textField}
-                                            label="Last Name"
-                                            margin="normal"
-                                            variant="outlined"
-                                            style={{
-                                                width: '100%'
-                                            }}
-                                        />
-
-                                    </Grid>
-                                    {/* <Typography gutterBottom variant="h6" component="h6">{this.state.requiredlname}</Typography> */}
-                                        <p style={this.state.lnamecolor}>{this.state.requiredlname}</p>
-                                    <Grid style={{ width: '98%' }}>
-                                        <TextField
-                                            id="outlined-basic"
-                                            value={this.state.phone}
-                                            className={classes.textField}
-                                            label="Phone Number"
-                                            margin="normal"
-                                            variant="outlined"
-                                            style={{
-                                                width: '100%'
-                                            }}
-                                        />
-                                    </Grid>
-                                    {/* <Typography gutterBottom variant="h6" component="h6">{this.state.requiredcp}</Typography> */}
-                                    <p style={this.state.cpColor}>{this.state.requiredcp}</p>
-                                    <Grid style={{ width: '98%' }}>
-                                        <TextField
-                                            id="outlined-basic"
-                                            value={this.state.email}
-                                            className={classes.textField}
-                                            label="Email"
-                                            margin="normal"
-                                            variant="outlined"
-                                            style={{
-                                                width: '100%'
-                                            }}
-                                        />
-                                    </Grid>
-                                    {/* <Typography gutterBottom variant="h6" component="h6">{this.state.requiredgmail}</Typography> */}
-                                    <p style={this.state.emailColor}>{this.state.requiredgmail}</p>
-                                    <Grid style={{ width: '98%' }}>
-                                        <TextField
-                                            id="outlined-basic"
-                                            value={this.state.payment}
-                                            className={classes.textField}
-                                            label="Payment Method"
-                                            margin="normal"
-                                            variant="outlined"
-                                            style={{
-                                                width: '100%'
-                                            }}
-                                        />
-                                    </Grid>
-                                    {/* <Typography gutterBottom variant="h6" component="h6">{this.state.requiredpay}</Typography> */}
-                                    <p style={this.state.paymentColor}>{this.state.requiredlname}</p>
-                                </Grid>
-                                <br></br>
-                                <br></br>
-                                <hr style={{ width: '96%' }}></hr>
-                            </Grid>
-                            <Card>
-                                <CardActions>
-                                    <Typography gutterBottom variant="h6" component="h6">
+                                <center>
+                                    <form onSubmit={this.handleSubmit} noValidate>
+                                        <div className='fullName'>
+                                            <label className='fName' htmlFor="fullName">Full Name</label>
+                                            <input type='text' name='fullName' onChange={this.handleChange} noValidate />
+                                            {errors.fullName.length > 0 &&
+                                                <span className='error'>{errors.fullName}</span>}
+                                        </div>
+                                        <div className='email'>
+                                            <label htmlFor="email">Email</label>
+                                            <input type='email' name='email' onChange={this.handleChange} noValidate />
+                                            {errors.email.length > 0 &&
+                                                <span className='error'>{errors.email}</span>}
+                                        </div>
+                                        <div className='password'>
+                                            <label htmlFor="password">Password</label>
+                                            <input type='password' name='password' onChange={this.handleChange} noValidate />
+                                            {errors.password.length > 0 &&
+                                                <span className='error'>{errors.password}</span>}
+                                        </div>
+                                        <Typography gutterBottom variant="h6" component="h6">
                                         &nbsp;&nbsp;Price:
                                                 </Typography>
-                                    <Grid container justify='flex-end'>
-                                        <Button size="small" color="primary" type="submit" onClick={this.checkInformation} >Preview & Confirm</Button>
-                                        <Grid container justify='flex-end'>
-                                            <Button size="small" color="primary">
-                                                Back
-                                    </Button>
-                                        </Grid>
+                                        <div className='submit'>
+                                            <button>Preview & Confirm</button>
+                                        </div>
+                                        {this.state.errorCount !== null ? <p className="form-status">Form is {formValid ? 'valid ✅' : 'invalid ❌'}</p> : 'Form not submitted'}
+
+                                    <br></br>
+                                <br></br>
+                                <hr style={{ width: '96%' }}></hr>
+                                    </form>
+                                </center>
+                       
+
                                     </Grid>
-                                </CardActions>
-                            </Card>
 
                         </Paper>
                     </Grid>
