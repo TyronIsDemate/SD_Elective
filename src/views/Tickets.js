@@ -49,11 +49,16 @@ export default class DateLocation extends Component {
             ReactDOM.render(<Checkout />, document.getElementById('root'));
         }
     };
+
     componentDidMount() {
-        this.setState({journeyTo : this.props.location.state.journeyTo, 
-            journeyFrom : this.props.location.state.journeyFrom,
-            petsa : this.props.location.state.petsa});
+        this.setState({ 
+            journeyTo: this.props.location.state.journeyTo,
+            journeyFrom: this.props.location.state.journeyFrom,
+            petsa:this.props.location.state.petsa,
+            departureTime:this.props.location.state.departureTime
+        });
     }
+
     render() {
         return (
             <div>
@@ -203,11 +208,14 @@ export default class DateLocation extends Component {
                             <Card>
                                 <CardContent>
                                     <Typography gutterBottom variant="h6" component="h6">
-                                        <b></b>Journey from {this.state.journeyFrom} to {this.state.journeyTo}
+                                        Journey from <span><b>{this.state.journeyFrom}</b></span> to <span><b>{this.state.journeyTo}</b></span>
                                     </Typography>
                                     <Typography gutterBottom variant="h6" component="h6">
-                                        Date of Departure: {this.state.petsa}
-                                                </Typography>
+                                        Date of Departure: <span><b>{this.state.petsa}</b></span>
+                                    </Typography>
+                                    <Typography gutterBottom variant="h6" component="h6">
+                                        Departure Time: <span><b>{this.state.departureTime}</b></span>
+                                    </Typography>
                                     <Table className={classes.table} aria-label="customized table">
                                         <TableHead>
                                             <TableRow>

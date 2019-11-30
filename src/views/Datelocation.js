@@ -28,45 +28,88 @@ export default class DateLocation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: new Date(),
-            time: Date.now(),
+            date: "",
+            displayDate: new Date(),
+            time: "",
+            displayTime: Date.now(),
             from: "",
             fromRequire: 'Starting Location',
             to: "",
             toRequired: 'Destination',
-            toTickets:false,
-            toRequiredColor:null,
-            fromRequiredColor:null
+            toTickets: false,
+            toRequiredColor: null,
+            fromRequiredColor: null
         }
     }
+    componentDidMount() {
+        let months = {
+            '0': 'January',
+            '1': 'February',
+            '2': 'March',
+            '3': 'April',
+            '4': 'May',
+            '5': 'June',
+            '6': 'July',
+            '7': 'August',
+            '8': 'September',
+            '9': 'October',
+            '10': 'November',
+            '11': 'December'
+        };
+        let year = new Date().getFullYear();
+        let month = new Date().getMonth();
+        month = months[String(month)];
+        let day = new Date().getDate();
+        let date = month + ' ' + day + ', ' + year;
+        this.setState({ date: date });
+        let hour = new Date().getHours();
+        let minutes = new Date().getMinutes();
+        var ampm = hour >= 12 ? 'pm' : 'am';
+        hour = hour % 12;
+        hour = hour ? hour : 12;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        let time = hour + ':' + minutes + ' ' + ampm;
+        this.setState({ time: time })
+
+    }
     checkCredential = () => {
-        console.log(this.state.date)
-        if (this.state.from !== null && this.state.to !== null && this.state.date !== null){
-            this.setState({toTickets:true});
+        if (this.state.from !== "" && this.state.to !== "" && this.state.date !== "") {
+            this.setState({ toTickets: true });
         }
-        if(this.state.from == null){
-            this.setState({fromRequire:"Required field"})
-            this.setState({fromRequiredColor:{
-                color:"red"
-            }})
+        if (this.state.from === "") {
+            this.setState({ fromRequire: "Required field" })
+            this.setState({
+                fromRequiredColor: {
+                    color: "red"
+                }
+            })
         }
-        if(this.state.to == null){
-            this.setState({toRequired:"Required Field"});
-            this.setState({toRequiredColor:{
-                color:"red"
-            }})
+        if (this.state.to === "") {
+            this.setState({ toRequired: "Required Field" });
+            this.setState({
+                toRequiredColor: {
+                    color: "red"
+                }
+            })
         }
-        if(this.state.from == null && this.state.to == null){
-            this.setState({fromRequire:"Required field", toRequired:"Required field"})
+        if (this.state.from === "" && this.state.to === "") {
+            this.setState({ fromRequire: "Required field", toRequired: "Required field" })
         }
-      };
+    };
 
     render() {
         if (this.state.toTickets) {
             //go to the Ticket Component
-            this.setState({toRequiredColor:{color:"black"},fromRequiredColor:{color:"black"}})
-            return <Redirect to={{ pathname: "/Tickets", state: {journeyTo : this.state.to, 
-                journeyFrom : this.state.from, petsa : this.state.date} }} />
+            this.setState({ toRequiredColor: { color: "black" }, fromRequiredColor: { color: "black" } })
+            return <Redirect to={{
+                pathname: "/Tickets",
+                state: {
+                    journeyTo: this.state.to,
+                    journeyFrom: this.state.from,
+                    petsa: this.state.date,
+                    departureTime: this.state.time
+                }
+            }} />
         }
         return (
             <div>
@@ -76,12 +119,39 @@ export default class DateLocation extends Component {
     }
 
     datelocation() {
-        const date = date => {
-            this.setState({ 'date': date.toDateString() })
+        const dating = date => {
+            let months = {
+                '0': 'January',
+                '1': 'February',
+                '2': 'March',
+                '3': 'April',
+                '4': 'May',
+                '5': 'June',
+                '6': 'July',
+                '7': 'August',
+                '8': 'September',
+                '9': 'October',
+                '10': 'November',
+                '11': 'December'
+            }
+            let month = new Date(date).getMonth();
+            month = months[String(month)];
+            let day = new Date(date).getDate();
+            let Year = new Date(date).getFullYear();
+            let updatedDate = month + ' ' + day + ', ' + Year
+            this.setState({ date: updatedDate, displayDate: date })
         };
 
         const time = time => {
-            this.setState({ 'time': time })
+            let hour = time.getHours();
+            let minutes = time.getMinutes();
+            var ampm = hour >= 12 ? 'pm' : 'am';
+            hour = hour % 12;
+            hour = hour ? hour : 12;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+
+            let times = hour + ':' + minutes + ' ' + ampm;
+            this.setState({ time: times, displayTime: time })
         }
 
         const from = from => event => {
@@ -90,7 +160,7 @@ export default class DateLocation extends Component {
         const to = to => event => {
             this.setState({ [to]: event.target.value })
         }
-       
+
 
 
         const classes = makeStyles(theme => ({
@@ -111,7 +181,7 @@ export default class DateLocation extends Component {
                 marginTop: theme.spacing(2),
             },
         }));
-        
+
         return (
             <div className={classes.root}>
                 <Header />
@@ -131,8 +201,8 @@ export default class DateLocation extends Component {
                                                     margin="normal"
                                                     id="date-picker-inline"
                                                     label="Departure Date"
-                                                    value={this.state.date}
-                                                    onChange={date}
+                                                    value={this.state.displayDate}
+                                                    onChange={dating}
                                                     KeyboardButtonProps={{
                                                         'aria-label': 'change date',
                                                     }}
@@ -143,7 +213,7 @@ export default class DateLocation extends Component {
                                                     margin="normal"
                                                     id="time-picker"
                                                     label="Departure Time"
-                                                    value={this.state.time}
+                                                    value={this.state.displayTime}
                                                     onChange={time}
                                                     KeyboardButtonProps={{
                                                         'aria-label': 'change time',
@@ -201,15 +271,15 @@ export default class DateLocation extends Component {
                                 </CardContent>
                                 <CardActions>
                                     <Grid container justify='flex-end'>
-                                    <Button size="small" color="primary" type="submit" onClick={this.checkCredential} >CHECK AVAILABILITY</Button>
+                                        <Button size="small" color="primary" type="submit" onClick={this.checkCredential} >CHECK AVAILABILITY</Button>
                                     </Grid>
                                 </CardActions>
                             </Card>
                         </Paper>
                     </Grid>
-                    </Grid>
+                </Grid>
             </div>
-                )
-            }
-        
+        )
+    }
+
 }

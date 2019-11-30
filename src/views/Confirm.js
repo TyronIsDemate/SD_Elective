@@ -17,25 +17,28 @@ import Final from './Final';
 
 
 
-export default class DateLocation extends Component {
+export default class Confirm extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-        fname : ' ',
-        lname : ' ',
-        gmail : ' ',
-        cp: ' ',
-        pay: ' ',
+            confirmFname: "",
+            confirmLname: "",
+            confirmGmail: "",
+            confirmCp: "",
+            confirmPay: "",
 
         }
     }
-    confirm = () => {
-            ReactDOM.render(<Final/>, document.getElementById('root'));
-    }
+
     componentDidMount() {
-        console.log(this.props.location.state.fname)
-        this.setState({fname:this.props.location.state.fname, lname:this.props.location.state.lname,gmail:this.props.location.state.gmail,cp:this.props.location.state.cp,pay:this.props.location.state.pay});
+        this.setState({
+            confirmFname: this.props.location.state.confirmFname,
+            confirmLname: this.props.location.state.confirmLname,
+            confirmGmail: this.props.location.state.confirmGmail,
+            confirmCp: this.props.location.state.confirmCp,
+            confirmPay: this.props.location.state.confirmPay
+        });
     }
 
     render() {
@@ -140,21 +143,21 @@ export default class DateLocation extends Component {
                                                 </Typography>
                                                 <Grid>
                                                     <Typography gutterBottom variant="h6" component="h6">
-                                                        First Name : {this.state.fname}
-                                                </Typography>
+                                                        First Name : {this.state.confirmFname}
+                                                    </Typography>
                                                     <Typography gutterBottom variant="h6" component="h6">
-                                                        Last Name : {this.state.lname}
-                                                </Typography>
+                                                        Last Name : {this.state.confirmLname}
+                                                    </Typography>
                                                     <Typography gutterBottom variant="h6" component="h6">
-                                                        Phone : {this.state.cp}
-                                                </Typography>
+                                                        Email : {this.state.confirmGmail}
+                                                    </Typography>
                                                     <Typography gutterBottom variant="h6" component="h6">
-                                                        Email : {this.state.gmail}
-                                                </Typography>
-                                                <Typography gutterBottom variant="h6" component="h6">
-                                                        Payment Method : {this.state.pay}
-                                                </Typography>
-                                                
+                                                        Phone : {this.state.confirmCp}
+                                                    </Typography>
+                                                    <Typography gutterBottom variant="h6" component="h6">
+                                                        Payment Method : {this.state.confirmPay}
+                                                    </Typography>
+
                                                 </Grid>
                                             </Grid>
 
@@ -167,11 +170,11 @@ export default class DateLocation extends Component {
                             <hr style={{ width: '96%' }}></hr>
                             <Card>
                                 <CardActions>
-                                <Typography gutterBottom variant="h6" component="h6">
-                                                 &nbsp;&nbsp;Price:
+                                    <Typography gutterBottom variant="h6" component="h6">
+                                        &nbsp;&nbsp;Price:
                                                 </Typography>
                                     <Grid container justify='flex-end'>
-                                    <Button size="small" color="primary" type="submit" onClick={this.confirm} >Confirm</Button>
+                                        <Button size="small" color="primary" type="submit" onClick={this.confirm} >Confirm</Button>
                                         <Grid container justify='flex-end'>
                                             <Button size="small" color="primary">
                                                 Back

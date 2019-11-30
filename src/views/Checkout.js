@@ -2,20 +2,14 @@ import React, { Component } from 'react';
 import Header from '../components/Header';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core/styles';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Navigation from '../components/navigationBar';
 import Typography from '@material-ui/core/Typography';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import TextField from '@material-ui/core/TextField';
 import { Redirect } from "react-router-dom";
 
-
-const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
-const phoneno = /^\d{10}$/;
 const validateForm = (errors) => {
     let valid = true;
     Object.values(errors).forEach(
@@ -32,19 +26,24 @@ const countErrors = (errors) => {
     return count;
 }
 
-export default class DateLocation extends Component {
+export default class Checkout extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             formValid: false,
             errorCount: null,
+            toConfirm: false,
+            fName: "",
+            lName: "",
+            email: "",
+            phone: "",
+            paymentMethod: "cash",
             errors: {
-                firstname: '',
-                lastname: '',
+                firstName: '',
+                lastName: '',
                 email: '',
                 phone: '',
-                pay: '',
             }
         };
     }
@@ -53,60 +52,87 @@ export default class DateLocation extends Component {
         event.preventDefault();
         const { name, value } = event.target;
         let errors = this.state.errors;
-
+        const names = RegExp(/^[-ña-zA-Z]+$/);
         switch (name) {
-            case 'firstname':
-                errors.firstname =
-                    value.length < 5
-                        ? 'Full Name must be 5 characters long!'
-                        : '';
+            case 'firstName':
+                if (!names.test(value)) {
+                    errors.firstName = "Names should only be in an Alphabeth!"
+                } else {
+                    errors.firstName = ""
+                    this.setState({ fName: value });
+                }
                 break;
-            case 'lastname':
-                errors.lastname =
-                    value.length < 5
-                        ? 'Full Name must be 5 characters long!'
-                        : '';
+            case 'lastName':
+                if (!names.test(value)) {
+                    errors.lastName = "Names should only be in an Alphabeth!"
+                } else {
+                    errors.lastName = ""
+                    this.setState({ lName: value });
+                }
                 break;
             case 'email':
-                errors.email =
-                    validEmailRegex.test(value)
-                        ? ''
-                        : 'Email is not valid!';
+                const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+                if (!validEmailRegex.test(value)) {
+                    errors.email = 'Invalid email'
+                } else {
+                    errors.email = ""
+                    this.setState({ email: value });
+                }
                 break;
             case 'phone':
-                errors.phone =
-                    phoneno.test(value)
-                        ? ''
-                        : 'You only need to input numbers';
-                break;
-            case 'pay':
-                errors.pay =
-                    phoneno.test(value)
-                        ? ''
-                        : 'You only need to input numbers';
-                break;
-            default:
+                const reg = new RegExp('^[+0-9]+$');
+                if (!reg.test(value)) {
+                    errors.phone = 'Enter only numbers!'
+                } else {
+                    errors.phone = "";
+                    this.setState({ phone: value });
+                }
                 break;
         }
-
         this.setState({ errors, [name]: value });
     }
 
+
     handleSubmit = (event) => {
-        event.preventDefault();
-        this.setState({ formValid: validateForm(this.state.errors) });
-        this.setState({ errorCount: countErrors(this.state.errors) });
+        let errors = this.state.errors;
+        if (this.state.fName === "") {
+            errors.firstName = "This field is required! ";
+        }
+        if (this.state.lName === "") {
+            errors.lastName = "This field is required! ";
+        }
+        if (this.state.email === "") {
+            errors.email = 'This field is required! ';
+        }
+        if (this.state.phone === "") {
+            errors.phone = 'This field is required! ';
+        }
+        if (this.state.fName !== "" && this.state.lName !== "" && this.state.email !== "" && this.state.phone !== "") {
+            event.preventDefault();
+            this.setState({
+                formValid: validateForm(this.state.errors),
+                errorCount: countErrors(this.state.errors),
+                toConfirm: true
+            });
+        } else {
+            this.setState({
+                'errors.firstName': "This field is required! ",
+                'errors.lastName': "This field is required! ",
+                'errors.email': 'This field is required! ',
+                'errors.phone': 'This field is required! '
+            });
+        }
+
     }
 
-    render() {
-
+    checkout() {
         const { errors, formValid } = this.state;
         const classes = makeStyles(theme => ({
             root: {
                 flexGrow: 1,
             },
             paper: {
-                height: 140,
+                height: 500,
                 width: 100,
                 padding: theme.spacing(2),
                 textAlign: 'center',
@@ -131,13 +157,13 @@ export default class DateLocation extends Component {
         return (
             <div className={classes.root}>
                 <Header />
-                <Grid container spacing={3} justify="center" style={{ marginTop: '5%%' }}>
-                    <Grid item xs={8}>
+                <Grid container spacing={3} justify="center" style={{ marginTop: '3%' }}>
+                    <Grid item xs={8} style={{ height: '100%' }}>
                         <Navigation />
                         <Paper className={classes.paper}>
                             <Grid container justify='space-around' style={{ height: '10%' }}>
                                 <Grid style={{ width: '30%' }}>
-                                    <Card className={classes.card} style={{ maxHeight: '300px', marginTop: '8%' }}>
+                                    <Card className={classes.card} style={{ maxHeight: '500px', marginTop: '8%' }}>
                                         <CardActionArea>
                                             <CardContent>
                                                 <Typography gutterBottom variant="h5" component="h2">
@@ -179,59 +205,73 @@ export default class DateLocation extends Component {
                                         </CardActionArea>
                                     </Card>
                                 </Grid>
-                                <center>
-                                    <form onSubmit={this.handleSubmit} noValidate>
-                                        <div className='firstname'>
-                                            <label className='firstname' htmlFor="firstname">Firstname</label>
-                                            <input type='text' name='firstname' onChange={this.handleChange} noValidate />
-                                            {errors.firstname.length > 0 &&
-                                                <span className='error'>{errors.firstname}</span>}
-                                        </div>
-                                        <div className='lastname'>
-                                            <label className='lastname' htmlFor="lastname">Lastname</label>
-                                            <input type='text' name='lastname' onChange={this.handleChange} noValidate />
-                                            {errors.lastname.length > 0 &&
-                                                <span className='error'>{errors.lastname}</span>}
-                                        </div>
-                                        <div className='email'>
-                                            <label htmlFor="email">Email</label>
-                                            <input type='email' name='email' onChange={this.handleChange} noValidate />
-                                            {errors.email.length > 0 &&
-                                                <span className='error'>{errors.email}</span>}
-                                        </div>
-                                        <div className='phone'>
-                                            <label className='phone' htmlFor="phone">Phone</label>
-                                            <input type='text' name='phone' onChange={this.handleChange} noValidate />
-                                            {errors.phone.length > 0 &&
-                                                <span className='error'>{errors.phone}</span>}
-                                        </div>
-                                        <div className='pay'>
-                                            <label htmlFor="pay">Payment Method</label>
-                                            <input type='text' name='pay' onChange={this.handleChange} noValidate />
-                                            {errors.pay.length > 0 &&
-                                                <span className='error'>{errors.pay}</span>}
-                                        </div>
-                                        <br></br>
-                                        <br></br>
-
-                                        <hr style={{ width: '96%' }}></hr>
-                                    </form>
-                                </center>
-                                <Typography style={{ textAlign: 'right' }} gutterBottom variant="h6" component="h6">
-                                    &nbsp;&nbsp;Price:
+                                <Grid container justify="center">
+                                    <Grid item>
+                                        <form className="checkoutForm" onSubmit={this.handleSubmit} noValidate>
+                                            <div className='firstName'>
+                                                <label className='fName' htmlFor="firstName">Firstname</label>
+                                                <input type='text' name='firstName' onChange={this.handleChange} noValidate />
+                                                {errors.firstName.length > 0 &&
+                                                    <p className='error'>{errors.firstName}</p>}
+                                            </div>
+                                            <div className='lastName'>
+                                                <label className='lName' htmlFor="lastName">Lastname</label>
+                                                <input type='text' name='lastName' onChange={this.handleChange} noValidate />
+                                                {errors.lastName.length > 0 &&
+                                                    <p className='error'>{errors.lastName}</p>}
+                                            </div>
+                                            <div className='email'>
+                                                <label htmlFor="email">Email</label>
+                                                <input type='email' name='email' onChange={this.handleChange} noValidate />
+                                                {errors.email.length > 0 &&
+                                                    <p className='error'>{errors.email}</p>}
+                                            </div>
+                                            <div className='phone'>
+                                                <label htmlFor="phone">Phone Number</label>
+                                                <input type='phone' name='phone' onChange={this.handleChange} noValidate />
+                                                {errors.phone.length > 0 &&
+                                                    <p className='error'>{errors.phone}</p>}
+                                            </div>
+                                            <div className='pay'>
+                                                <p>Payment Method:<b>CASH</b></p>
+                                            </div>
+                                            <Typography gutterBottom variant="h6" component="h6">
+                                                &nbsp;&nbsp;Price:
                                                 </Typography>
-                                    <div className='submit' style={{textAlign:'center'}}>
-                                        <button>Preview & Confirm</button>
-                                    </div>
-                                    {this.state.errorCount !== null ? <p className="form-status">Form is {formValid ? 'valid ✅' : 'invalid ❌'}</p> : 'Form not submitted'}
-
+                                            <hr style={{ width: '96%' }}></hr>
+                                        </form>
+                                    </Grid>
+                                </Grid>
+                                <div className='submit'>
+                                    <button id='checkout' onClick={this.handleSubmit}>Preview & Confirm</button>
+                                    <button id='back'>Back</button>
+                                </div>
 
                             </Grid>
-
                         </Paper>
                     </Grid>
                 </Grid>
             </div >
+        )
+    }
+
+    render() {
+        if (this.state.toConfirm) {
+            return <Redirect to={{
+                pathname: "/confirm",
+                state: {
+                    confirmFname: this.state.fName,
+                    confirmLname: this.state.lName,
+                    confirmGmail: this.state.email,
+                    confirmCp: this.state.phone,
+                    confirmPay: this.state.paymentMethod
+                }
+            }} />
+        }
+        return (
+            <div>
+                {this.checkout()}
+            </div>
         )
     }
 
