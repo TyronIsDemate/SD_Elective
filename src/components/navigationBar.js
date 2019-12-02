@@ -4,17 +4,38 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-
+import ReactDOM from 'react-dom';
+import DateFnsUtils from '@date-io/date-fns';
+import DateLocation from '../views/Datelocation';
+import Tickets from '../views/Tickets';
+import Checkout from '../views/Checkout';
+import Confirm from '../views/Confirm';
 export default class Navigation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dateLocation: "",
-            tickets: "",
-            checkOut: "",
-            confirm: ""
+            // dateLocation: "",
+            // tickets: "",
+            // checkOut: "",
+            // confirm: ""
         }
     }
+    dateLocation = () => {
+        ReactDOM.render(<DateLocation />, document.getElementById('root'));
+    }
+    tickets = () => {
+        ReactDOM.render(<Tickets />, document.getElementById('root'));
+
+    }
+    checkOut =()=>{
+        ReactDOM.render(<Checkout/>, document.getElementById('root'));
+
+    }
+    confirm =() =>{
+        ReactDOM.render(<Confirm/>, document.getElementById('root'));
+
+    }
+    
     render() {
         return (
             <div>
@@ -22,6 +43,7 @@ export default class Navigation extends Component {
             </div>
         )
     }
+
     ButtonAppBar() {
         const classes = makeStyles(theme => ({
             root: {
@@ -40,10 +62,10 @@ export default class Navigation extends Component {
                 <AppBar position="static" style={{ backgroundColor: '#0269e8' }}>
                     <Toolbar>
                         <ButtonGroup style={{ height: '30px' }} variant="text" aria-label="outlined contained primary button group">
-                            <Button style={{color:"white"}}>Date & Location</Button>
-                            <Button style={{color:"white"}}>Tickets</Button>
-                            <Button style={{color:"white"}}>Check Out</Button>
-                            <Button style={{color:"white"}}>Confirm</Button>
+                            <Button onClick={this.dateLocation} style={{ color: "white" }}>Date & Location</Button>
+                            <Button onClick={this.tickets} style={{ color: "white" }} >Tickets</Button>
+                            <Button onClick={this.checkOut} style={{ color: "white" }}>CheckOut</Button>
+                            <Button onClick={this.confirm} style={{ color: "white" }}>Confirm</Button>
                         </ButtonGroup>
                     </Toolbar>
                 </AppBar>
