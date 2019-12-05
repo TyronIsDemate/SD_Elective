@@ -1,178 +1,101 @@
-p, div {
-  font-family: Lato;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.App {
+  text-align: center;
+  font-family: Helvetica, sans-serif;
+  background-color: rgb(202, 11, 11);
+  height: 100vh;
+  color: rgb(250, 250, 250);
+}
+.App-title {
+  font-size: 50px;
+  padding: 25px 0;
 }
 
-/* 
-  Colors:
-  https://coolors.co/22223b-4a4e69-eadae4-9a8c98-c9ada7 
-*/
-/*
-YANKEES BLUE: #22223B
-INDEPENDENCE: #4A4E69
-PLATINUM: #EADAE4
-SPANISH GRAY: #9A8C98
-SILVER PINK: #C9ADA7
-*/
-
-
-
-/* .form-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 280px;
-  max-width: 80%;
-  min-width: 100px;
-  min-height: 400px;
-  padding: 20px 40px;
-  border-radius: 6px;
-  box-shadow: 0px 8px 36px lightblue;
-  background-color: #fefefe;
-} */
-
-/* .form-wrapper > h2 {
+.Timers {
   display: flex;
   justify-content: center;
-  font-family: "Segoe UI", "Ubuntu", "Roboto", "Open Sans", "Helvetica Neue", sans-serif;
-  font-size: 2em;
-  font-weight: lighter;
-  margin-top: 0.25em;
-  color: #222;
-} */
-
-form {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
 }
-
-.info {
-  padding-bottom: 1em;
-  padding-left: 2em;
-  padding-right: 2em;
+@media (max-width: 900px) {
+  .Timers {
+    flex-direction: column;
+    align-items: center;
+  }
 }
-
-label {
-  margin-bottom: 0.5em;
-  color: #444;
-  font-weight: lighter;
-  padding-left: 0.70em;
+@media (max-width: 900px) {
+  .Stopwatch {
+    margin-bottom: 40px;
+  }
 }
-.fName{
-  padding-top: 3em;
-
-}
-#checkout{
-  min-width: 20%;
-  cursor: pointer;
-  margin-left: 0.90em;
-  margin-top: 0.5em;
-  padding: 	0.938em;
-  border: none;
+.Countdown,
+.Stopwatch {
+  margin-left: 30px;
+  margin-right: 30px;
+  border: 2px solid grey;
   border-radius: 4px;
-  background-color: #0269e8;
-  color: #fefefe;
-  margin-bottom: 2em;
+  padding: 20px;
+  background-color: rgb(68, 240, 91);
+  box-shadow: 0 3px 6px rgb(12, 12, 12);
 }
-#checkout:hover {
-  background-color:black;
-  color: #fefefe;
-}
-
-
-
-input {
-  width: 500px;
-  padding: 10px ;
-  border-radius: 5px;
-  outline: none;
-  border: 1px solid #d6d1d5;
+.Countdown {
+  padding-top: 10px;
 }
 
-input::placeholder {
-  font-size: 1.2em;
-  font-weight: lighter;
-  color: #bbb;
+.Countdown-header,
+.Stopwatch-header {
+  font-size: 40px;
+  font-weight: bold;
 }
-#back {
-  width: 150px;
-  height:40px;
-  cursor: pointer;
-  margin-right: 720px;
-  margin-top: -62px;
-  margin-bottom: 30px;
-  padding: 	0.938em;
-  border: none;
+
+button {
+  background-color: #1782cf;
+  border: solid 1px transparent;
   border-radius: 4px;
-  background-color:#0269e8;
-  color: #fefefe;
-}
-#back:hover {
-  background-color:black;
-  color: #fefefe;
-}
-#checkout {
-  width: 150px;
+  padding: 10px 20px;
+  color: #ffffff;
+  font-size: 16px;
+  margin: 0 5px;
   cursor: pointer;
-  margin-left: 700px;
-  margin-top: 0.5em;
-  padding: 	0.938em;
-  border: none;
-  border-radius: 4px;
-  background-color:#0269e8;
-  color: #fefefe;
 }
-#checkout:hover {
-  background-color:black;
-  color: #fefefe;
+button:hover {
+  background-color: #106ba3;
 }
-
-input.error {
-  border: 1px solid #EADAE4;
+.Stopwatch button {
+  padding: 12px 32px;
+  font-size: 20px;
+}
+.Stopwatch-display {
+  padding: 40px 0;
+  font-size: 48px;
 }
 
-.error {
-  color:#db2269;
-  font-size: 0.625em;
-  display: relative;
+.Countdown-display {
+  margin-top: 5px;
+  margin-bottom: 20px;
 }
+.Countdown-display button {
+  margin: 10 10px;
+  border: solid 1px transparent;
+  border-radius: 2px;
+  padding:  16px;
+  color: #ffffff;
 
-.fName {
-  margin-right: 1%;
-  margin-top: 2em;
+
+  font-size: 16px;
 }
-
-.fName,
-.email,
-.lName,
-.pay,
-.phone {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-  text-align: center;
+.Countdown-display button:hover {
+  background-color: #106ba3;
 }
-/* .fName,
-.email,
-.lName,
-.pay,
-.phone {
-  width: 100%;
-} */
-
-/* .email,
-.password {
-  width: 100%;
-} */
-.checkoutForm{
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-  text-align: center;
+.Countdown-label {
+  font-size: 18px;
+  margin-top: 2px;
+  margin-bottom: 10px;
+  
 }
-
-.submit {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  text-align: right;
+.Countdown-time {
+  font-size: 36px;
+  margin: 5px 0;
 }

@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 import DateFnsUtils from '@date-io/date-fns';
 import DateLocation from '../views/Datelocation';
 import Tickets from '../views/Tickets';
-import Checkout from '../views/Checkout';
+import Checkout from '../views/userView';
 import Confirm from '../views/Confirm';
 export default class Navigation extends Component {
     constructor(props) {
